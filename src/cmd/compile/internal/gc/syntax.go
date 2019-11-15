@@ -797,6 +797,8 @@ const (
 	OGETG   // runtime.getg() (read g pointer)
 
 	OEND
+
+	OVECLIT
 )
 
 // Nodes is a pointer to a slice of *Node.

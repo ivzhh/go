@@ -2805,7 +2805,7 @@ func typecheckcomplit(n *Node) (res *Node) {
 
 	case TFLOAT32X4:
 		typecheckarraylit(types.Types[TFLOAT32], 4, n.List.Slice(), "float32x4 literal")
-		n.Op = OCOMPLIT
+		n.Op = OVECLIT
 		n.Right = nil
 
 	case TARRAY:
