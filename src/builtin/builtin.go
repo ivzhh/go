@@ -57,6 +57,8 @@ type float32 float32
 // float64 is the set of all IEEE-754 64-bit floating-point numbers.
 type float64 float64
 
+type float32x4 float32x4
+
 // complex64 is the set of all complex numbers with float32 real and
 // imaginary parts.
 type complex64 complex64

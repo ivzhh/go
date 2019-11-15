@@ -69,6 +69,8 @@ const (
 	TSSA   // internal types used by SSA backend (flags, memory, etc.)
 	TTUPLE // a pair of types, used by SSA backend
 
+	TFLOAT32X4
+
 	NTYPE
 )
 

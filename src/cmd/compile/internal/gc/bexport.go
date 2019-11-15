@@ -172,6 +172,7 @@ func predeclared() []*types.Type {
 			types.Types[TUINTPTR],
 			types.Types[TFLOAT32],
 			types.Types[TFLOAT64],
+			types.Types[TFLOAT32X4],
 			types.Types[TCOMPLEX64],
 			types.Types[TCOMPLEX128],
 			types.Types[TSTRING],

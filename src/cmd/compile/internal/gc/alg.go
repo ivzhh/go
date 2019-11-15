@@ -31,6 +31,8 @@ const (
 	ACPLX64
 	ACPLX128
 
+	AFLOAT128
+
 	// Type can be compared/hashed as regular memory.
 	AMEM AlgKind = 100
 
@@ -115,6 +117,9 @@ func algtype1(t *types.Type) (AlgKind, *types.Type) {
 
 	case TFLOAT64:
 		return AFLOAT64, nil
+
+	case TFLOAT32X4:
+		return AFLOAT128, nil
 
 	case TCOMPLEX64:
 		return ACPLX64, nil

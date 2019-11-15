@@ -25,6 +25,7 @@ var basicTypes = [...]struct {
 	{"uint64", TUINT64},
 	{"float32", TFLOAT32},
 	{"float64", TFLOAT64},
+	{"float32x4", TFLOAT32X4},
 	{"complex64", TCOMPLEX64},
 	{"complex128", TCOMPLEX128},
 	{"bool", TBOOL},
@@ -194,6 +195,7 @@ func typeinit() {
 
 	isFloat[TFLOAT32] = true
 	isFloat[TFLOAT64] = true
+	isFloat[TFLOAT32X4] = true
 
 	isComplex[TCOMPLEX64] = true
 	isComplex[TCOMPLEX128] = true
@@ -333,6 +335,9 @@ func typeinit() {
 	minfltval[TCOMPLEX64] = minfltval[TFLOAT32]
 	maxfltval[TCOMPLEX128] = maxfltval[TFLOAT64]
 	minfltval[TCOMPLEX128] = minfltval[TFLOAT64]
+
+	maxfltval[TFLOAT32X4] = maxfltval[TFLOAT32]
+	minfltval[TFLOAT32X4] = minfltval[TFLOAT32]
 
 	types.Types[TINTER] = types.New(TINTER) // empty interface
 

@@ -264,6 +264,10 @@ func dowidth(t *types.Type) {
 		w = 8
 		t.Align = uint8(Widthreg)
 
+	case TFLOAT32X4:
+		w = 16
+		t.Align = uint8(Widthreg)
+
 	case TCOMPLEX64:
 		w = 8
 		t.Align = 4
