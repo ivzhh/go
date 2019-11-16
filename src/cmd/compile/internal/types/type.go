@@ -1319,6 +1319,16 @@ func (t *Type) NumElem() int64 {
 	return t.Extra.(*Array).Bound
 }
 
+func (t *Type) NumVecWidth() int64 {
+	switch t.Etype {
+	case TFLOAT32X4:
+		return 4
+	default:
+		Fatalf("want vector type, but have %v", t)
+	}
+	return 0
+}
+
 type componentsIncludeBlankFields bool
 
 const (

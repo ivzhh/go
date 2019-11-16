@@ -947,8 +947,10 @@ func anylit(n *Node, var_ *Node, init *Nodes) {
 		}
 
 		var components int64
-		if n.Op == OARRAYLIT || n.Op == OVECLIT {
+		if n.Op == OARRAYLIT {
 			components = t.NumElem()
+		} else if n.Op == OVECLIT {
+			components = t.NumVecWidth()
 		} else {
 			components = int64(t.NumFields())
 		}

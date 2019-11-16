@@ -134,6 +134,7 @@ var _typekind = []string{
 	TCOMPLEX64:  "complex64",
 	TCOMPLEX128: "complex128",
 	TFLOAT32:    "float32",
+	TFLOAT32X4:  "float32x4",
 	TFLOAT64:    "float64",
 	TBOOL:       "bool",
 	TSTRING:     "string",
@@ -2804,7 +2805,7 @@ func typecheckcomplit(n *Node) (res *Node) {
 		n.Type = nil
 
 	case TFLOAT32X4:
-		typecheckarraylit(types.Types[TFLOAT32], 4, n.List.Slice(), "float32x4 literal")
+		typecheckvectorlit(types.Types[TFLOAT32], 4, n.List.Slice(), "float32x4 literal")
 		n.Op = OVECLIT
 		n.Right = nil
 
@@ -2963,6 +2964,19 @@ func typecheckcomplit(n *Node) (res *Node) {
 	}
 
 	return n
+}
+
+func typecheckvectorlit(elemType *types.Type, bound int64, elts []*Node, ctx string) int64 {
+	if int64(len(elts)) != bound {
+		yyerror("must be %d lanes", bound)
+	}
+
+	for _, elt := range elts {
+		if elt.Op == OKEY {
+			yyerror("key:value format is not supported")
+		}
+	}
+	return bound
 }
 
 // typecheckarraylit type-checks a sequence of slice/array literal elements.
