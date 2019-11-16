@@ -464,6 +464,13 @@ func isStaticCompositeLiteral(n *Node) bool {
 			}
 		}
 		return true
+	case OVECLIT:
+		for _, r := range n.List.Slice() {
+			if !isStaticCompositeLiteral(r) {
+				return false
+			}
+		}
+		return true
 	case OSTRUCTLIT:
 		for _, r := range n.List.Slice() {
 			if r.Op != OSTRUCTKEY {
@@ -911,9 +918,9 @@ func anylit(n *Node, var_ *Node, init *Nodes) {
 		var_ = typecheck(var_, ctxExpr|ctxAssign)
 		anylit(n.Left, var_, init)
 
-	case OSTRUCTLIT, OARRAYLIT:
-		if !t.IsStruct() && !t.IsArray() {
-			Fatalf("anylit: not struct/array")
+	case OSTRUCTLIT, OARRAYLIT, OVECLIT:
+		if !t.IsStruct() && !t.IsArray() && !t.IsVector() {
+			Fatalf("anylit: not struct/array/vector")
 		}
 
 		if var_.isSimpleName() && n.List.Len() > 4 {
@@ -922,7 +929,7 @@ func anylit(n *Node, var_ *Node, init *Nodes) {
 			vstat.Name.SetReadonly(true)
 
 			ctxt := inInitFunction
-			if n.Op == OARRAYLIT {
+			if n.Op == OARRAYLIT || n.Op == OVECLIT {
 				ctxt = inNonInitFunction
 			}
 			fixedlit(ctxt, initKindStatic, n, vstat, init)
@@ -940,7 +947,7 @@ func anylit(n *Node, var_ *Node, init *Nodes) {
 		}
 
 		var components int64
-		if n.Op == OARRAYLIT {
+		if n.Op == OARRAYLIT || n.Op == OVECLIT {
 			components = t.NumElem()
 		} else {
 			components = int64(t.NumFields())

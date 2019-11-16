@@ -1274,6 +1274,10 @@ func (t *Type) IsStruct() bool {
 	return t.Etype == TSTRUCT
 }
 
+func (t *Type) IsVector() bool {
+	return t.Etype == TFLOAT32X4
+}
+
 func (t *Type) IsInterface() bool {
 	return t.Etype == TINTER
 }
