@@ -2972,10 +2972,22 @@ func typecheckvectorlit(elemType *types.Type, bound int64, elts []*Node, ctx str
 	}
 
 	for _, elt := range elts {
+		setlineno(elt)
 		if elt.Op == OKEY {
 			yyerror("key:value format is not supported")
 		}
 	}
+
+	for i, elt := range elts {
+		setlineno(elt)
+		vp := &elts[i]
+
+		r := *vp
+		r = pushtype(r, elemType)
+		r = typecheck(r, ctxExpr)
+		*vp = assignconv(r, elemType, ctx)
+	}
+
 	return bound
 }
 
