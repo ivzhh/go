@@ -536,6 +536,13 @@ func fixedlit(ctxt initContext, kind initKind, n *Node, var_ *Node, init *Nodes)
 			k++
 			return a, r
 		}
+	case OVECLIT:
+		var k int64
+		splitnode = func(r *Node) (*Node, *Node) {
+			a := nod(OINDEX, var_, nodintconst(k))
+			k++
+			return a, r
+		}
 	case OSTRUCTLIT:
 		splitnode = func(r *Node) (*Node, *Node) {
 			if r.Op != OSTRUCTKEY {
