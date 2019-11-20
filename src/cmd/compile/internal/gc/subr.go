@@ -123,6 +123,8 @@ func sameline(a, b src.XPos) bool {
 func yyerrorl(pos src.XPos, format string, args ...interface{}) {
 	msg := fmt.Sprintf(format, args...)
 
+	Fatalf(format, args...)
+
 	if strings.HasPrefix(msg, "syntax error") {
 		nsyntaxerrors++
 		// only one syntax error per line, no matter what error
