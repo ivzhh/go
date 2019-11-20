@@ -1473,7 +1473,7 @@ opswitch:
 		// stringtoslicerune(*[32]rune, string) []rune
 		n = mkcall("stringtoslicerune", n.Type, init, a, conv(n.Left, types.Types[TSTRING]))
 
-	case OARRAYLIT, OSLICELIT, OMAPLIT, OSTRUCTLIT, OPTRLIT, OVECLIT:
+	case OARRAYLIT, OSLICELIT, OMAPLIT, OSTRUCTLIT, OPTRLIT:
 		if isStaticCompositeLiteral(n) && !canSSAType(n.Type) {
 			// n can be directly represented in the read-only data section.
 			// Make direct reference to the static data. See issue 12841.
@@ -1487,6 +1487,21 @@ opswitch:
 		var_ := temp(n.Type)
 		anylit(n, var_, init)
 		n = var_
+
+	case OVECLIT:
+		if isStaticCompositeLiteral(n) && !canSSAType(n.Type) {
+			// n can be directly represented in the read-only data section.
+			// Make direct reference to the static data. See issue 12841.
+			vstat := staticname(n.Type)
+			vstat.Name.SetReadonly(true)
+			fixedlit(inInitFunction, initKindStatic, n, vstat, init)
+			n = vstat
+			n = typecheck(n, ctxExpr)
+			break
+		}
+		var_ := temp(types.NewArray(types.Types[TFLOAT32], 4))
+		anylit(n, var_, init)
+		n = mkcall("loadFloat32x4", n.Type, init, var_)
 
 	case OSEND:
 		n1 := n.Right
