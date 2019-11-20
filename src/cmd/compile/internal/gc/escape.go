@@ -539,8 +539,7 @@ func (e *Escape) exprSkipInit(k EscHole, n *Node) {
 
 	case OVECLIT:
 		for _, elt := range n.List.Slice() {
-			//e.discard(elt)
-			e.expr(k.note(n, "vector literal element"), elt)
+			e.discard(elt)
 		}
 
 	case OSLICELIT:

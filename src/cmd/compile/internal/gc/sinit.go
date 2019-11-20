@@ -536,13 +536,6 @@ func fixedlit(ctxt initContext, kind initKind, n *Node, var_ *Node, init *Nodes)
 			k++
 			return a, r
 		}
-	case OVECLIT:
-		var k int64
-		splitnode = func(r *Node) (*Node, *Node) {
-			a := nod(OINDEX, var_, nodintconst(k))
-			k++
-			return a, r
-		}
 	case OSTRUCTLIT:
 		splitnode = func(r *Node) (*Node, *Node) {
 			if r.Op != OSTRUCTKEY {
@@ -925,7 +918,7 @@ func anylit(n *Node, var_ *Node, init *Nodes) {
 		var_ = typecheck(var_, ctxExpr|ctxAssign)
 		anylit(n.Left, var_, init)
 
-	case OSTRUCTLIT, OARRAYLIT, OVECLIT:
+	case OSTRUCTLIT, OARRAYLIT:
 		if !t.IsStruct() && !t.IsArray() && !t.IsVector() {
 			Fatalf("anylit: not struct/array/vector")
 		}
@@ -936,7 +929,7 @@ func anylit(n *Node, var_ *Node, init *Nodes) {
 			vstat.Name.SetReadonly(true)
 
 			ctxt := inInitFunction
-			if n.Op == OARRAYLIT || n.Op == OVECLIT {
+			if n.Op == OARRAYLIT {
 				ctxt = inNonInitFunction
 			}
 			fixedlit(ctxt, initKindStatic, n, vstat, init)
@@ -956,8 +949,6 @@ func anylit(n *Node, var_ *Node, init *Nodes) {
 		var components int64
 		if n.Op == OARRAYLIT {
 			components = t.NumElem()
-		} else if n.Op == OVECLIT {
-			components = t.NumVecWidth()
 		} else {
 			components = int64(t.NumFields())
 		}
