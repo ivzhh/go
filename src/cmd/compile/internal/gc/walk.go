@@ -1499,9 +1499,13 @@ opswitch:
 			n = typecheck(n, ctxExpr)
 			break
 		}
-		var_ := temp(types.NewArray(types.Types[TFLOAT32], 4))
+		temp_t := types.NewArray(types.Types[TFLOAT32], 4)
+		var_ := temp(temp_t)
+		n.Op = OARRAYLIT
+		originalType := n.Type
+		n.Type = temp_t
 		anylit(n, var_, init)
-		n = mkcall("loadFloat32x4", n.Type, init, var_)
+		n = mkcall("loadFloat32x4", originalType, init, var_)
 
 	case OSEND:
 		n1 := n.Right
