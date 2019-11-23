@@ -2580,6 +2580,7 @@ const (
 	OpAtomicAdd32Variant
 	OpAtomicAdd64Variant
 	OpClobber
+	Op128bitMake
 )
 
 var opcodeTable = [...]opInfo{
@@ -31623,6 +31624,13 @@ var opcodeTable = [...]opInfo{
 	},
 	{
 		name:      "Clobber",
+		auxType:   auxSymOff,
+		argLen:    0,
+		symEffect: SymNone,
+		generic:   true,
+	},
+	{
+		name: "128bitMake",
 		auxType:   auxSymOff,
 		argLen:    0,
 		symEffect: SymNone,

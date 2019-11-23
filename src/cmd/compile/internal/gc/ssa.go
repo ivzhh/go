@@ -3106,6 +3106,8 @@ func (s *state) zeroVal(t *types.Type) *ssa.Value {
 		case 1:
 			return s.entryNewValue1(ssa.OpArrayMake1, t, s.zeroVal(t.Elem()))
 		}
+	case t.IsVector():
+		return s.entryNewValue0(ssa.Op128bitMake, t)
 	}
 	s.Fatalf("zero for type %v not implemented", t)
 	return nil
@@ -3300,6 +3302,13 @@ func init() {
 			return s.newValue0(ssa.OpGetCallerSP, s.f.Config.Types.Uintptr)
 		},
 		all...)
+
+	addF("go.runtime", "loadFloat32x4",
+		func(s *state, n *Node, args []*ssa.Value) *ssa.Value {
+			Fatalf("not implemented")
+			return s.newValue0(ssa.OpGetCallerSP, s.f.Config.Types.Uintptr)
+		},
+		sys.AMD64)
 
 	/******** runtime/internal/sys ********/
 	addF("runtime/internal/sys", "Ctz32",
@@ -4738,7 +4747,7 @@ func canSSAType(t *types.Type) bool {
 		}
 		return true
 	case TFLOAT32X4:
-		return false
+		return true
 	default:
 		return true
 	}

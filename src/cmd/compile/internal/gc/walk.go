@@ -1489,16 +1489,6 @@ opswitch:
 		n = var_
 
 	case OVECLIT:
-		if isStaticCompositeLiteral(n) && !canSSAType(n.Type) {
-			// n can be directly represented in the read-only data section.
-			// Make direct reference to the static data. See issue 12841.
-			vstat := staticname(n.Type)
-			vstat.Name.SetReadonly(true)
-			fixedlit(inInitFunction, initKindStatic, n, vstat, init)
-			n = vstat
-			n = typecheck(n, ctxExpr)
-			break
-		}
 		temp_t := types.NewArray(types.Types[TFLOAT32], 4)
 		var_ := temp(temp_t)
 		n.Op = OARRAYLIT

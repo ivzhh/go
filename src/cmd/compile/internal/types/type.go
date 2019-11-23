@@ -1275,7 +1275,11 @@ func (t *Type) IsStruct() bool {
 }
 
 func (t *Type) IsVector() bool {
-	return t.Etype == TFLOAT32X4
+	switch t.Etype {
+	case TFLOAT32X4:
+		return true
+	}
+	return false
 }
 
 func (t *Type) IsInterface() bool {
