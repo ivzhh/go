@@ -4746,8 +4746,6 @@ func canSSAType(t *types.Type) bool {
 			}
 		}
 		return true
-	case TFLOAT32X4:
-		return false
 	default:
 		return true
 	}
