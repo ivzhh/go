@@ -3305,8 +3305,7 @@ func init() {
 
 	addF("go.runtime", "loadFloat32x4",
 		func(s *state, n *Node, args []*ssa.Value) *ssa.Value {
-			Fatalf("not implemented")
-			return s.newValue0(ssa.OpConst32Fx4, s.f.Config.Types.Uintptr)
+			return s.load(types.Types[types.TFLOAT32X4], args[0])
 		},
 		sys.AMD64)
 
