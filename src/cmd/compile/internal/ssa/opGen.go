@@ -2581,6 +2581,7 @@ const (
 	OpAtomicAdd64Variant
 	OpClobber
 	OpConst32Fx4
+	OpLoad32Fx4
 )
 
 var opcodeTable = [...]opInfo{
@@ -31633,6 +31634,11 @@ var opcodeTable = [...]opInfo{
 		name:    "Const32Fx4",
 		auxType: auxFloat32,
 		argLen:  0,
+		generic: true,
+	},
+	{
+		name:    "Load32Fx4",
+		argLen:  2,
 		generic: true,
 	},
 }
