@@ -191,7 +191,7 @@ var runtimeDecls = [...]struct {
 	{"libfuzzerTraceConstCmp2", funcTag, 126},
 	{"libfuzzerTraceConstCmp4", funcTag, 127},
 	{"libfuzzerTraceConstCmp8", funcTag, 128},
-	{"loadFloat32x4", funcTag, 132},
+	{"loadFloat32x4", funcTag, 133},
 	{"x86HasPOPCNT", varTag, 15},
 	{"x86HasSSE41", varTag, 15},
 	{"x86HasFMA", varTag, 15},
@@ -200,7 +200,7 @@ var runtimeDecls = [...]struct {
 }
 
 func runtimeTypes() []*types.Type {
-	var typs [133]*types.Type
+	var typs [134]*types.Type
 	typs[0] = types.Bytetype
 	typs[1] = types.NewPtr(typs[0])
 	typs[2] = types.Types[TANY]
@@ -332,7 +332,8 @@ func runtimeTypes() []*types.Type {
 	typs[128] = functype(nil, []*Node{anonfield(typs[21]), anonfield(typs[21])}, nil)
 	typs[129] = types.Types[TFLOAT32]
 	typs[130] = types.NewArray(typs[129], 4)
-	typs[131] = types.Types[TFLOAT32X4]
-	typs[132] = functype(nil, []*Node{anonfield(typs[130])}, []*Node{anonfield(typs[131])})
+	typs[131] = types.NewPtr(typs[130])
+	typs[132] = types.Types[TFLOAT32X4]
+	typs[133] = functype(nil, []*Node{anonfield(typs[131])}, []*Node{anonfield(typs[132])})
 	return typs[:]
 }
