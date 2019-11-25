@@ -3107,7 +3107,7 @@ func (s *state) zeroVal(t *types.Type) *ssa.Value {
 			return s.entryNewValue1(ssa.OpArrayMake1, t, s.zeroVal(t.Elem()))
 		}
 	case t.IsVector():
-		return s.entryNewValue0(ssa.Op128bitMake, t)
+		return s.entryNewValue0(ssa.OpConst32Fx4, t)
 	}
 	s.Fatalf("zero for type %v not implemented", t)
 	return nil

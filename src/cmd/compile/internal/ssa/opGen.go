@@ -2580,7 +2580,7 @@ const (
 	OpAtomicAdd32Variant
 	OpAtomicAdd64Variant
 	OpClobber
-	Op128bitMake
+	OpConst32Fx4
 )
 
 var opcodeTable = [...]opInfo{
@@ -31630,11 +31630,10 @@ var opcodeTable = [...]opInfo{
 		generic:   true,
 	},
 	{
-		name: "128bitMake",
-		auxType:   auxSymOff,
-		argLen:    0,
-		symEffect: SymNone,
-		generic:   true,
+		name:    "Const32Fx4",
+		auxType: auxFloat32,
+		argLen:  0,
+		generic: true,
 	},
 }
 

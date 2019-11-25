@@ -52,29 +52,31 @@ type (
 )
 
 type Types struct {
-	Bool       *types.Type
-	Int8       *types.Type
-	Int16      *types.Type
-	Int32      *types.Type
-	Int64      *types.Type
-	UInt8      *types.Type
-	UInt16     *types.Type
-	UInt32     *types.Type
-	UInt64     *types.Type
-	Int        *types.Type
-	Float32    *types.Type
-	Float64    *types.Type
-	UInt       *types.Type
-	Uintptr    *types.Type
-	String     *types.Type
-	BytePtr    *types.Type // TODO: use unsafe.Pointer instead?
-	Int32Ptr   *types.Type
-	UInt32Ptr  *types.Type
-	IntPtr     *types.Type
-	UintptrPtr *types.Type
-	Float32Ptr *types.Type
-	Float64Ptr *types.Type
-	BytePtrPtr *types.Type
+	Bool         *types.Type
+	Int8         *types.Type
+	Int16        *types.Type
+	Int32        *types.Type
+	Int64        *types.Type
+	UInt8        *types.Type
+	UInt16       *types.Type
+	UInt32       *types.Type
+	UInt64       *types.Type
+	Int          *types.Type
+	Float32      *types.Type
+	Float64      *types.Type
+	UInt         *types.Type
+	Uintptr      *types.Type
+	String       *types.Type
+	BytePtr      *types.Type // TODO: use unsafe.Pointer instead?
+	Int32Ptr     *types.Type
+	UInt32Ptr    *types.Type
+	IntPtr       *types.Type
+	UintptrPtr   *types.Type
+	Float32Ptr   *types.Type
+	Float64Ptr   *types.Type
+	BytePtrPtr   *types.Type
+	Float32x4    *types.Type
+	Float32x4Ptr *types.Type
 }
 
 // NewTypes creates and populates a Types.
@@ -109,6 +111,8 @@ func (t *Types) SetTypPtrs() {
 	t.Float32Ptr = types.NewPtr(types.Types[types.TFLOAT32])
 	t.Float64Ptr = types.NewPtr(types.Types[types.TFLOAT64])
 	t.BytePtrPtr = types.NewPtr(types.NewPtr(types.Types[types.TUINT8]))
+	t.Float32x4 = types.Types[types.TFLOAT32X4]
+	t.Float32x4Ptr = types.NewPtr(types.Types[types.TFLOAT32X4])
 }
 
 type Logger interface {
