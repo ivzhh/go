@@ -6,10 +6,12 @@
 (Add(64|32|16|8)  x y) -> (ADD(Q|L|L|L)  x y)
 (AddPtr x y) -> (ADDQ x y)
 (Add(32|64)F x y) -> (ADDS(S|D) x y)
+(Add128F x y) -> (ADDPS x y)
 
 (Sub(64|32|16|8)  x y) -> (SUB(Q|L|L|L)  x y)
 (SubPtr x y) -> (SUBQ x y)
 (Sub(32|64)F x y) -> (SUBS(S|D) x y)
+(Sub128F x y) -> (SUBPS x y)
 
 (Mul(64|32|16|8)  x y) -> (MUL(Q|L|L|L)  x y)
 (Mul(32|64)F x y) -> (MULS(S|D) x y)

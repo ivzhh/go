@@ -592,6 +592,8 @@ func rewriteValueAMD64(v *Value) bool {
 		return rewriteValueAMD64_OpAMD64XORQload_0(v)
 	case OpAMD64XORQmodify:
 		return rewriteValueAMD64_OpAMD64XORQmodify_0(v)
+	case OpAdd128F:
+		return rewriteValueAMD64_OpAdd128F_0(v)
 	case OpAdd16:
 		return rewriteValueAMD64_OpAdd16_0(v)
 	case OpAdd32:
@@ -1102,6 +1104,8 @@ func rewriteValueAMD64(v *Value) bool {
 		return rewriteValueAMD64_OpStaticCall_0(v)
 	case OpStore:
 		return rewriteValueAMD64_OpStore_0(v)
+	case OpSub128F:
+		return rewriteValueAMD64_OpSub128F_0(v)
 	case OpSub16:
 		return rewriteValueAMD64_OpSub16_0(v)
 	case OpSub32:
@@ -49966,6 +49970,18 @@ func rewriteValueAMD64_OpAMD64XORQmodify_0(v *Value) bool {
 	}
 	return false
 }
+func rewriteValueAMD64_OpAdd128F_0(v *Value) bool {
+	// match: (Add128F x y)
+	// result: (ADDPS x y)
+	for {
+		y := v.Args[1]
+		x := v.Args[0]
+		v.reset(OpAMD64ADDPS)
+		v.AddArg(x)
+		v.AddArg(y)
+		return true
+	}
+}
 func rewriteValueAMD64_OpAdd16_0(v *Value) bool {
 	// match: (Add16 x y)
 	// result: (ADDL x y)
@@ -56940,6 +56956,18 @@ func rewriteValueAMD64_OpStore_0(v *Value) bool {
 		return true
 	}
 	return false
+}
+func rewriteValueAMD64_OpSub128F_0(v *Value) bool {
+	// match: (Sub128F x y)
+	// result: (SUBPS x y)
+	for {
+		y := v.Args[1]
+		x := v.Args[0]
+		v.reset(OpAMD64SUBPS)
+		v.AddArg(x)
+		v.AddArg(y)
+		return true
+	}
 }
 func rewriteValueAMD64_OpSub16_0(v *Value) bool {
 	// match: (Sub16 x y)

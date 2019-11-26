@@ -63,6 +63,11 @@ func storeByType(t *types.Type) obj.As {
 		case 8:
 			return x86.AMOVSD
 		}
+	} else if t.IsVector() {
+		switch width {
+		case 16:
+			return x86.AMOVUPS
+		}
 	} else {
 		switch width {
 		case 1:
@@ -216,7 +221,8 @@ func ssaGenValue(s *gc.SSAGenState, v *ssa.Value) {
 		ssa.OpAMD64SARQ, ssa.OpAMD64SARL, ssa.OpAMD64SARW, ssa.OpAMD64SARB,
 		ssa.OpAMD64ROLQ, ssa.OpAMD64ROLL, ssa.OpAMD64ROLW, ssa.OpAMD64ROLB,
 		ssa.OpAMD64RORQ, ssa.OpAMD64RORL, ssa.OpAMD64RORW, ssa.OpAMD64RORB,
-		ssa.OpAMD64ADDSS, ssa.OpAMD64ADDSD, ssa.OpAMD64SUBSS, ssa.OpAMD64SUBSD,
+		ssa.OpAMD64ADDSS, ssa.OpAMD64ADDSD, ssa.OpAMD64ADDPS,
+		ssa.OpAMD64SUBSS, ssa.OpAMD64SUBSD, ssa.OpAMD64SUBPS,
 		ssa.OpAMD64MULSS, ssa.OpAMD64MULSD, ssa.OpAMD64DIVSS, ssa.OpAMD64DIVSD,
 		ssa.OpAMD64PXOR,
 		ssa.OpAMD64BTSL, ssa.OpAMD64BTSQ,

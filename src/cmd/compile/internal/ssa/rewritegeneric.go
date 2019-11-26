@@ -8,6 +8,8 @@ import "cmd/compile/internal/types"
 
 func rewriteValuegeneric(v *Value) bool {
 	switch v.Op {
+	case OpAdd128F:
+		return rewriteValuegeneric_OpAdd128F_0(v)
 	case OpAdd16:
 		return rewriteValuegeneric_OpAdd16_0(v) || rewriteValuegeneric_OpAdd16_10(v) || rewriteValuegeneric_OpAdd16_20(v) || rewriteValuegeneric_OpAdd16_30(v)
 	case OpAdd32:
@@ -470,6 +472,45 @@ func rewriteValuegeneric(v *Value) bool {
 		return rewriteValuegeneric_OpZeroExt8to32_0(v)
 	case OpZeroExt8to64:
 		return rewriteValuegeneric_OpZeroExt8to64_0(v)
+	}
+	return false
+}
+func rewriteValuegeneric_OpAdd128F_0(v *Value) bool {
+	// match: (Add128F (Const32Fx4 [c]) (Const32Fx4 [d]))
+	// result: (Const32Fx4 [auxFrom32F(auxTo32F(c) + auxTo32F(d))])
+	for {
+		_ = v.Args[1]
+		v_0 := v.Args[0]
+		if v_0.Op != OpConst32Fx4 {
+			break
+		}
+		c := v_0.AuxInt
+		v_1 := v.Args[1]
+		if v_1.Op != OpConst32Fx4 {
+			break
+		}
+		d := v_1.AuxInt
+		v.reset(OpConst32Fx4)
+		v.AuxInt = auxFrom32F(auxTo32F(c) + auxTo32F(d))
+		return true
+	}
+	// match: (Add128F (Const32Fx4 [d]) (Const32Fx4 [c]))
+	// result: (Const32Fx4 [auxFrom32F(auxTo32F(c) + auxTo32F(d))])
+	for {
+		_ = v.Args[1]
+		v_0 := v.Args[0]
+		if v_0.Op != OpConst32Fx4 {
+			break
+		}
+		d := v_0.AuxInt
+		v_1 := v.Args[1]
+		if v_1.Op != OpConst32Fx4 {
+			break
+		}
+		c := v_1.AuxInt
+		v.reset(OpConst32Fx4)
+		v.AuxInt = auxFrom32F(auxTo32F(c) + auxTo32F(d))
+		return true
 	}
 	return false
 }

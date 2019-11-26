@@ -28,6 +28,7 @@ var genericOps = []opData{
 	{name: "AddPtr", argLength: 2}, // For address calculations.  arg0 is a pointer and arg1 is an int.
 	{name: "Add32F", argLength: 2, commutative: true},
 	{name: "Add64F", argLength: 2, commutative: true},
+	{name: "Add128F", argLength: 2, commutative: true},
 
 	{name: "Sub8", argLength: 2}, // arg0 - arg1
 	{name: "Sub16", argLength: 2},
@@ -36,6 +37,7 @@ var genericOps = []opData{
 	{name: "SubPtr", argLength: 2},
 	{name: "Sub32F", argLength: 2},
 	{name: "Sub64F", argLength: 2},
+	{name: "Sub128F", argLength: 2},
 
 	{name: "Mul8", argLength: 2, commutative: true}, // arg0 * arg1
 	{name: "Mul16", argLength: 2, commutative: true},
@@ -43,9 +45,11 @@ var genericOps = []opData{
 	{name: "Mul64", argLength: 2, commutative: true},
 	{name: "Mul32F", argLength: 2, commutative: true},
 	{name: "Mul64F", argLength: 2, commutative: true},
+	{name: "Mul128F", argLength: 2, commutative: true},
 
 	{name: "Div32F", argLength: 2}, // arg0 / arg1
 	{name: "Div64F", argLength: 2},
+	{name: "Div128F", argLength: 2},
 
 	{name: "Hmul32", argLength: 2, commutative: true},
 	{name: "Hmul32u", argLength: 2, commutative: true},

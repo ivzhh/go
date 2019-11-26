@@ -497,8 +497,10 @@ const (
 
 	OpAMD64ADDSS
 	OpAMD64ADDSD
+	OpAMD64ADDPS
 	OpAMD64SUBSS
 	OpAMD64SUBSD
+	OpAMD64SUBPS
 	OpAMD64MULSS
 	OpAMD64MULSD
 	OpAMD64DIVSS
@@ -2222,6 +2224,7 @@ const (
 	OpAddPtr
 	OpAdd32F
 	OpAdd64F
+	OpAdd128F
 	OpSub8
 	OpSub16
 	OpSub32
@@ -2229,14 +2232,17 @@ const (
 	OpSubPtr
 	OpSub32F
 	OpSub64F
+	OpSub128F
 	OpMul8
 	OpMul16
 	OpMul32
 	OpMul64
 	OpMul32F
 	OpMul64F
+	OpMul128F
 	OpDiv32F
 	OpDiv64F
+	OpDiv128F
 	OpHmul32
 	OpHmul32u
 	OpHmul64
@@ -5889,6 +5895,22 @@ var opcodeTable = [...]opInfo{
 		},
 	},
 	{
+		name:         "ADDPS",
+		argLen:       2,
+		commutative:  true,
+		resultInArg0: true,
+		asm:          x86.AADDPS,
+		reg: regInfo{
+			inputs: []inputInfo{
+				{0, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+				{1, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+			},
+			outputs: []outputInfo{
+				{0, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+			},
+		},
+	},
+	{
 		name:         "SUBSS",
 		argLen:       2,
 		resultInArg0: true,
@@ -5908,6 +5930,21 @@ var opcodeTable = [...]opInfo{
 		argLen:       2,
 		resultInArg0: true,
 		asm:          x86.ASUBSD,
+		reg: regInfo{
+			inputs: []inputInfo{
+				{0, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+				{1, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+			},
+			outputs: []outputInfo{
+				{0, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+			},
+		},
+	},
+	{
+		name:         "SUBPS",
+		argLen:       2,
+		resultInArg0: true,
+		asm:          x86.ASUBPS,
 		reg: regInfo{
 			inputs: []inputInfo{
 				{0, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
@@ -29678,6 +29715,12 @@ var opcodeTable = [...]opInfo{
 		generic:     true,
 	},
 	{
+		name:        "Add128F",
+		argLen:      2,
+		commutative: true,
+		generic:     true,
+	},
+	{
 		name:    "Sub8",
 		argLen:  2,
 		generic: true,
@@ -29709,6 +29752,11 @@ var opcodeTable = [...]opInfo{
 	},
 	{
 		name:    "Sub64F",
+		argLen:  2,
+		generic: true,
+	},
+	{
+		name:    "Sub128F",
 		argLen:  2,
 		generic: true,
 	},
@@ -29749,12 +29797,23 @@ var opcodeTable = [...]opInfo{
 		generic:     true,
 	},
 	{
+		name:        "Mul128F",
+		argLen:      2,
+		commutative: true,
+		generic:     true,
+	},
+	{
 		name:    "Div32F",
 		argLen:  2,
 		generic: true,
 	},
 	{
 		name:    "Div64F",
+		argLen:  2,
+		generic: true,
+	},
+	{
+		name:    "Div128F",
 		argLen:  2,
 		generic: true,
 	},
