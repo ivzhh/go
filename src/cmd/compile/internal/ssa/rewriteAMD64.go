@@ -53067,6 +53067,21 @@ func rewriteValueAMD64_OpLoad_0(v *Value) bool {
 		v.AddArg(mem)
 		return true
 	}
+	// match: (Load <t> ptr mem)
+	// cond: t.IsVector()
+	// result: (MOVOload ptr mem)
+	for {
+		t := v.Type
+		mem := v.Args[1]
+		ptr := v.Args[0]
+		if !(t.IsVector()) {
+			break
+		}
+		v.reset(OpAMD64MOVOload)
+		v.AddArg(ptr)
+		v.AddArg(mem)
+		return true
+	}
 	return false
 }
 func rewriteValueAMD64_OpLocalAddr_0(v *Value) bool {
@@ -56817,6 +56832,23 @@ func rewriteValueAMD64_OpStore_0(v *Value) bool {
 			break
 		}
 		v.reset(OpAMD64MOVSSstore)
+		v.AddArg(ptr)
+		v.AddArg(val)
+		v.AddArg(mem)
+		return true
+	}
+	// match: (Store {t} ptr val mem)
+	// cond: t.(*types.Type).Size() == 16
+	// result: (MOVOstore ptr val mem)
+	for {
+		t := v.Aux
+		mem := v.Args[2]
+		ptr := v.Args[0]
+		val := v.Args[1]
+		if !(t.(*types.Type).Size() == 16) {
+			break
+		}
+		v.reset(OpAMD64MOVOstore)
 		v.AddArg(ptr)
 		v.AddArg(val)
 		v.AddArg(mem)

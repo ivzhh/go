@@ -228,11 +228,13 @@
 (Load <t> ptr mem) && (t.IsBoolean() || is8BitInt(t)) -> (MOVBload ptr mem)
 (Load <t> ptr mem) && is32BitFloat(t) -> (MOVSSload ptr mem)
 (Load <t> ptr mem) && is64BitFloat(t) -> (MOVSDload ptr mem)
+(Load <t> ptr mem) && t.IsVector() -> (MOVOload ptr mem)
 
 // Lowering stores
 // These more-specific FP versions of Store pattern should come first.
 (Store {t} ptr val mem) && t.(*types.Type).Size() == 8 && is64BitFloat(val.Type) -> (MOVSDstore ptr val mem)
 (Store {t} ptr val mem) && t.(*types.Type).Size() == 4 && is32BitFloat(val.Type) -> (MOVSSstore ptr val mem)
+(Store {t} ptr val mem) && t.(*types.Type).Size() == 16 -> (MOVOstore ptr val mem)
 
 (Store {t} ptr val mem) && t.(*types.Type).Size() == 8 -> (MOVQstore ptr val mem)
 (Store {t} ptr val mem) && t.(*types.Type).Size() == 4 -> (MOVLstore ptr val mem)
