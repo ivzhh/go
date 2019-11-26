@@ -684,6 +684,8 @@ func rewriteValueAMD64(v *Value) bool {
 		return rewriteValueAMD64_OpConst32_0(v)
 	case OpConst32F:
 		return rewriteValueAMD64_OpConst32F_0(v)
+	case OpConst32Fx4:
+		return rewriteValueAMD64_OpConst32Fx4_0(v)
 	case OpConst64:
 		return rewriteValueAMD64_OpConst64_0(v)
 	case OpConst64F:
@@ -51645,6 +51647,21 @@ func rewriteValueAMD64_OpConst32F_0(v *Value) bool {
 		v.AuxInt = val
 		return true
 	}
+}
+func rewriteValueAMD64_OpConst32Fx4_0(v *Value) bool {
+	// match: (Const32Fx4 [c])
+	// cond: float32(c) == 0
+	// result: (MOVOconst [c])
+	for {
+		c := v.AuxInt
+		if !(float32(c) == 0) {
+			break
+		}
+		v.reset(OpAMD64MOVOconst)
+		v.AuxInt = c
+		return true
+	}
+	return false
 }
 func rewriteValueAMD64_OpConst64_0(v *Value) bool {
 	// match: (Const64 [val])

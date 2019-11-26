@@ -581,6 +581,7 @@ const (
 	OpAMD64XORLconst
 	OpAMD64XORQconstmodify
 	OpAMD64XORLconstmodify
+	OpAMD64XORPS
 	OpAMD64CMPQ
 	OpAMD64CMPL
 	OpAMD64CMPW
@@ -2581,7 +2582,6 @@ const (
 	OpAtomicAdd64Variant
 	OpClobber
 	OpConst32Fx4
-	OpLoad32Fx4
 )
 
 var opcodeTable = [...]opInfo{
@@ -7231,6 +7231,23 @@ var opcodeTable = [...]opInfo{
 		reg: regInfo{
 			inputs: []inputInfo{
 				{0, 4295032831}, // AX CX DX BX SP BP SI DI R8 R9 R10 R11 R12 R13 R14 R15 SB
+			},
+		},
+	},
+	{
+		name:         "XORPS",
+		argLen:       2,
+		commutative:  true,
+		resultInArg0: true,
+		clobberFlags: true,
+		asm:          x86.AXORPS,
+		reg: regInfo{
+			inputs: []inputInfo{
+				{0, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+				{1, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+			},
+			outputs: []outputInfo{
+				{0, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
 			},
 		},
 	},
@@ -31634,11 +31651,6 @@ var opcodeTable = [...]opInfo{
 		name:    "Const32Fx4",
 		auxType: auxFloat32,
 		argLen:  0,
-		generic: true,
-	},
-	{
-		name:    "Load32Fx4",
-		argLen:  2,
 		generic: true,
 	},
 }
