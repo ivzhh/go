@@ -594,6 +594,9 @@ func (f *Func) ConstFloat32(t *types.Type, c float64) *Value {
 func (f *Func) ConstFloat64(t *types.Type, c float64) *Value {
 	return f.constVal(OpConst64F, t, int64(math.Float64bits(c)), true)
 }
+func (f *Func) ConstFloat32Fx4(t *types.Type, c float64) *Value {
+	return f.constVal(OpConst32Fx4, t, int64(math.Float64bits(c)), true)
+}
 
 func (f *Func) ConstSlice(t *types.Type) *Value {
 	return f.constVal(OpConstSlice, t, constSliceMagic, false)

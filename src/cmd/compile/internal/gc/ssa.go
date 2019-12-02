@@ -902,6 +902,9 @@ func (s *state) constFloat32(t *types.Type, c float64) *ssa.Value {
 func (s *state) constFloat64(t *types.Type, c float64) *ssa.Value {
 	return s.f.ConstFloat64(t, c)
 }
+func (s *state) constFloat32Fx4(t *types.Type, c float64) *ssa.Value {
+	return s.f.ConstFloat32Fx4(t, c)
+}
 func (s *state) constInt(t *types.Type, c int64) *ssa.Value {
 	if s.config.PtrSize == 8 {
 		return s.constInt64(t, c)
@@ -3310,6 +3313,17 @@ func init() {
 	addF("go.runtime", "loadFloat32x4",
 		func(s *state, n *Node, args []*ssa.Value) *ssa.Value {
 			return s.load(types.Types[types.TFLOAT32X4], args[0])
+		},
+		sys.AMD64)
+
+	addF("go.runtime", "constFloat32x4",
+		func(s *state, n *Node, args []*ssa.Value) *ssa.Value {
+			op := args[0].Op
+			switch op {
+			case ssa.OpConst8, ssa.OpConst16, ssa.OpConst32, ssa.OpConst64, ssa.OpConst32F, ssa.OpConst64F:
+log.Printf("%+v\n", *args[0])
+			}
+			return s.entryNewValue1(ssa.OpConst32Fx4, types.Types[types.TFLOAT32X4], args[0])
 		},
 		sys.AMD64)
 
