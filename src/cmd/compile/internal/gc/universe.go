@@ -451,6 +451,19 @@ func finishUniverse() {
 		s1.Block = s.Block
 	}
 
+	for _, s := range Runtimepkg.Syms {
+		if s.Def == nil {
+			continue
+		}
+		s1 := lookup(s.Name)
+		if s1.Def != nil {
+			continue
+		}
+
+		s1.Def = s.Def
+		s1.Block = s.Block
+	}
+
 	nodfp = newname(lookup(".fp"))
 	nodfp.Type = types.Types[TINT32]
 	nodfp.SetClass(PPARAM)
