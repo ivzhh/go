@@ -861,6 +861,16 @@ func ssaGenValue(s *gc.SSAGenState, v *ssa.Value) {
 		}
 		r := v.Reg()
 		opregreg(s, x86.AXORPS, r, r)
+	case ssa.OpAMD64SHUFPS:
+		p := s.Prog(v.Op.Asm())
+		p.From.Type = obj.TYPE_REG
+		p.From.Reg = v.Reg()
+		gc.AddAux(&p.From, v)
+		p.To.Type = obj.TYPE_REG
+		p.To.Reg = v.Args[1].Reg()
+		if v.Reg() != v.Args[0].Reg() {
+			v.Fatalf("input[0] and output not in same register %s", v.LongString())
+		}
 	case ssa.OpAMD64XORPS:
 		r := v.Reg()
 		if r != v.Args[0].Reg() {

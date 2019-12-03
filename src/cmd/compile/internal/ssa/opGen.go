@@ -891,6 +891,7 @@ const (
 	OpAMD64CMPXCHGQlock
 	OpAMD64ANDBlock
 	OpAMD64ORBlock
+	OpAMD64SHUFPS
 
 	OpARMADD
 	OpARMADDconst
@@ -2588,6 +2589,7 @@ const (
 	OpAtomicAdd64Variant
 	OpClobber
 	OpConst32Fx4
+	OpSet32Fx4
 )
 
 var opcodeTable = [...]opInfo{
@@ -11653,6 +11655,23 @@ var opcodeTable = [...]opInfo{
 			inputs: []inputInfo{
 				{1, 65535},      // AX CX DX BX SP BP SI DI R8 R9 R10 R11 R12 R13 R14 R15
 				{0, 4295032831}, // AX CX DX BX SP BP SI DI R8 R9 R10 R11 R12 R13 R14 R15 SB
+			},
+		},
+	},
+	{
+		name:         "SHUFPS",
+		auxType:      auxInt32,
+		argLen:       2,
+		resultInArg0: true,
+		clobberFlags: true,
+		asm:          x86.ASHUFPS,
+		reg: regInfo{
+			inputs: []inputInfo{
+				{0, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+				{1, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+			},
+			outputs: []outputInfo{
+				{0, 4294901760}, // X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
 			},
 		},
 	},
@@ -31710,6 +31729,11 @@ var opcodeTable = [...]opInfo{
 		name:    "Const32Fx4",
 		auxType: auxFloat32,
 		argLen:  0,
+		generic: true,
+	},
+	{
+		name:    "Set32Fx4",
+		argLen:  1,
 		generic: true,
 	},
 }

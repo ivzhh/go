@@ -192,7 +192,7 @@ var runtimeDecls = [...]struct {
 	{"libfuzzerTraceConstCmp4", funcTag, 127},
 	{"libfuzzerTraceConstCmp8", funcTag, 128},
 	{"loadFloat32x4", funcTag, 133},
-	{"constFloat32x4", funcTag, 134},
+	{"setFloat32x4", funcTag, 134},
 	{"x86HasPOPCNT", varTag, 15},
 	{"x86HasSSE41", varTag, 15},
 	{"x86HasFMA", varTag, 15},
