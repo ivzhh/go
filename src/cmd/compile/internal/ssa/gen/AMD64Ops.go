@@ -62,6 +62,22 @@ var regNamesAMD64 = []string{
 	"X13",
 	"X14",
 	"X15",
+	// "Y0",
+	// "Y1",
+	// "Y2",
+	// "Y3",
+	// "Y4",
+	// "Y5",
+	// "Y6",
+	// "Y7",
+	// "Y8",
+	// "Y9",
+	// "Y10",
+	// "Y11",
+	// "Y12",
+	// "Y13",
+	// "Y14",
+	// "Y15",
 
 	// If you add registers, update asyncPreempt in runtime
 
@@ -92,12 +108,13 @@ func init() {
 
 	// Common individual register masks
 	var (
-		ax         = buildReg("AX")
-		cx         = buildReg("CX")
-		dx         = buildReg("DX")
-		bx         = buildReg("BX")
-		gp         = buildReg("AX CX DX BX BP SI DI R8 R9 R10 R11 R12 R13 R14 R15")
-		fp         = buildReg("X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15")
+		ax = buildReg("AX")
+		cx = buildReg("CX")
+		dx = buildReg("DX")
+		bx = buildReg("BX")
+		gp = buildReg("AX CX DX BX BP SI DI R8 R9 R10 R11 R12 R13 R14 R15")
+		fp = buildReg("X0 X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15")
+		//avx        = buildReg("Y0 Y1 Y2 Y3 Y4 Y5 Y6 Y7 Y8 Y9 Y10 Y11 Y12 Y13 Y14 Y15")
 		gpsp       = gp | buildReg("SP")
 		gpspsb     = gpsp | buildReg("SB")
 		callerSave = gp | fp
@@ -106,6 +123,7 @@ func init() {
 	var (
 		gponly = []regMask{gp}
 		fponly = []regMask{fp}
+		//avxonly = []regMask{avx}
 	)
 
 	// Common regInfo

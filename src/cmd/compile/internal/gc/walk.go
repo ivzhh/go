@@ -2347,6 +2347,7 @@ func zeroResults() {
 			v = v.Name.Param.Stackcopy
 		}
 		// Zero the stack location containing f.
+		fmt.Printf("Zeroing %+v", v)
 		Curfn.Func.Enter.Append(nodl(Curfn.Pos, OAS, v, nil))
 	}
 }
