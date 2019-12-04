@@ -51667,6 +51667,8 @@ func rewriteValueAMD64_OpConst32F_0(v *Value) bool {
 	}
 }
 func rewriteValueAMD64_OpConst32Fx4_0(v *Value) bool {
+	b := v.Block
+	typ := &b.Func.Config.Types
 	// match: (Const32Fx4 [c])
 	// cond: float32(c) == 0
 	// result: (MOVOconst [c])
@@ -51679,7 +51681,16 @@ func rewriteValueAMD64_OpConst32Fx4_0(v *Value) bool {
 		v.AuxInt = c
 		return true
 	}
-	return false
+	// match: (Const32Fx4 [c])
+	// result: (Set32Fx4 (MOVSSconst <typ.Float32> [c]))
+	for {
+		c := v.AuxInt
+		v.reset(OpSet32Fx4)
+		v0 := b.NewValue0(v.Pos, OpAMD64MOVSSconst, typ.Float32)
+		v0.AuxInt = c
+		v.AddArg(v0)
+		return true
+	}
 }
 func rewriteValueAMD64_OpConst64_0(v *Value) bool {
 	// match: (Const64 [val])
@@ -56739,6 +56750,18 @@ func rewriteValueAMD64_OpSelect1_0(v *Value) bool {
 	return false
 }
 func rewriteValueAMD64_OpSet32Fx4_0(v *Value) bool {
+	// match: (Set32Fx4 (MOVSSconst [c]))
+	// result: (Const32Fx4 [c])
+	for {
+		v_0 := v.Args[0]
+		if v_0.Op != OpAMD64MOVSSconst {
+			break
+		}
+		c := v_0.AuxInt
+		v.reset(OpConst32Fx4)
+		v.AuxInt = c
+		return true
+	}
 	// match: (Set32Fx4 x)
 	// result: (SHUFPS [0] x x)
 	for {

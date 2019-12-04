@@ -2546,4 +2546,6 @@
 (MOVQload [off] {sym} (SB) _) && symIsRO(sym) -> (MOVQconst [int64(read64(sym, off, config.BigEndian))])
 
 (Const32Fx4 [c]) && float32(c) == 0 -> (MOVOconst [c])
+(Const32Fx4 [c]) -> (Set32Fx4 (MOVSSconst <typ.Float32> [c]))
+(Set32Fx4 (MOVSSconst [c])) -> (Const32Fx4 [c])
 (Set32Fx4 x) -> (SHUFPS [0] x x)
