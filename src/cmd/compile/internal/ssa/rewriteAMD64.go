@@ -1084,6 +1084,8 @@ func rewriteValueAMD64(v *Value) bool {
 		return rewriteValueAMD64_OpSelect0_0(v)
 	case OpSelect1:
 		return rewriteValueAMD64_OpSelect1_0(v)
+	case OpSet32Fx4:
+		return rewriteValueAMD64_OpSet32Fx4_0(v)
 	case OpSignExt16to32:
 		return rewriteValueAMD64_OpSignExt16to32_0(v)
 	case OpSignExt16to64:
@@ -56735,6 +56737,18 @@ func rewriteValueAMD64_OpSelect1_0(v *Value) bool {
 		return true
 	}
 	return false
+}
+func rewriteValueAMD64_OpSet32Fx4_0(v *Value) bool {
+	// match: (Set32Fx4 x)
+	// result: (SHUFPS [0] x x)
+	for {
+		x := v.Args[0]
+		v.reset(OpAMD64SHUFPS)
+		v.AuxInt = 0
+		v.AddArg(x)
+		v.AddArg(x)
+		return true
+	}
 }
 func rewriteValueAMD64_OpSignExt16to32_0(v *Value) bool {
 	// match: (SignExt16to32 x)

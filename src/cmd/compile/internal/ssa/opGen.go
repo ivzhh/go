@@ -11660,7 +11660,7 @@ var opcodeTable = [...]opInfo{
 	},
 	{
 		name:         "SHUFPS",
-		auxType:      auxInt32,
+		auxType:      auxInt8,
 		argLen:       2,
 		resultInArg0: true,
 		clobberFlags: true,

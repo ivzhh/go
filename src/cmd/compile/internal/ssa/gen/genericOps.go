@@ -574,7 +574,7 @@ var genericOps = []opData{
 	// Clobber experiment op
 	{name: "Clobber", argLength: 0, typ: "Void", aux: "SymOff", symEffect: "None"}, // write an invalid pointer value to the given pointer slot of a stack variable
 	{name: "Const32Fx4", aux: "Float32"},
-	{name: "Set32Fx4", argLength: 1, typ: "Float32"},
+	{name: "Set32Fx4", argLength: 1, typ: "Float32x4"},
 }
 
 //     kind          controls        successors   implicit exit

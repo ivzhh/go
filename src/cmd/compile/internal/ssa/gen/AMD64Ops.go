@@ -790,7 +790,7 @@ func init() {
 		{name: "ANDBlock", argLength: 3, reg: gpstore, asm: "ANDB", aux: "SymOff", clobberFlags: true, faultOnNilArg0: true, hasSideEffects: true, symEffect: "RdWr"}, // *(arg0+auxint+aux) &= arg1
 		{name: "ORBlock", argLength: 3, reg: gpstore, asm: "ORB", aux: "SymOff", clobberFlags: true, faultOnNilArg0: true, hasSideEffects: true, symEffect: "RdWr"},   // *(arg0+auxint+aux) |= arg1
 
-		{name: "SHUFPS", argLength: 2, reg: fp21, asm: "SHUFPS", aux: "Int32", resultInArg0: true, clobberFlags: true},
+		{name: "SHUFPS", argLength: 2, reg: fp21, asm: "SHUFPS", aux: "Int8", resultInArg0: true, clobberFlags: true},
 	}
 
 	var AMD64blocks = []blockData{
