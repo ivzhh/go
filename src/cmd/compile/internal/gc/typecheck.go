@@ -2804,11 +2804,6 @@ func typecheckcomplit(n *Node) (res *Node) {
 		yyerror("invalid composite literal type %v", t)
 		n.Type = nil
 
-	case TFLOAT32X4:
-		typecheckvectorlit(types.Types[TFLOAT32], 4, n.List.Slice(), "float32x4 literal")
-		n.Op = OVECLIT
-		n.Right = nil
-
 	case TARRAY:
 		typecheckarraylit(t.Elem(), t.NumElem(), n.List.Slice(), "array literal")
 		n.Op = OARRAYLIT

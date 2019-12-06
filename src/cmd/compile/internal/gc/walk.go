@@ -1488,19 +1488,6 @@ opswitch:
 		anylit(n, var_, init)
 		n = var_
 
-	case OVECLIT:
-		temp_t := types.NewArray(types.Types[TFLOAT32], 4)
-		var_ := temp(temp_t)
-		n.Op = OARRAYLIT
-		originalType := n.Type
-		n.Type = temp_t
-		anylit(n, var_, init)
-
-		addrNode := nod(OADDR, var_, nil)
-		addrNode.Type = types.NewPtr(temp_t)
-
-		n = mkcall("loadFloat32x4", originalType, init, addrNode)
-
 	case OSEND:
 		n1 := n.Right
 		n1 = assignconv(n1, n.Left.Type.Elem(), "chan send")

@@ -464,13 +464,6 @@ func isStaticCompositeLiteral(n *Node) bool {
 			}
 		}
 		return true
-	case OVECLIT:
-		for _, r := range n.List.Slice() {
-			if !isStaticCompositeLiteral(r) {
-				return false
-			}
-		}
-		return true
 	case OSTRUCTLIT:
 		for _, r := range n.List.Slice() {
 			if r.Op != OSTRUCTKEY {
