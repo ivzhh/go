@@ -248,7 +248,8 @@ func libfuzzerTraceConstCmp4(uint32, uint32)
 func libfuzzerTraceConstCmp8(uint64, uint64)
 
 func loadFloat32x4(*[4]float32) Float32x4
-func setFloat32x4(float32) Float32x4
+func setby1Float32x4(float32) Float32x4
+func setFloat32x4(float32, float32, float32, float32) Float32x4
 
 // architecture variants
 var x86HasPOPCNT bool

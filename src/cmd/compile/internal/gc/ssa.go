@@ -3316,9 +3316,15 @@ func init() {
 		},
 		sys.AMD64)
 
-	addF("go.runtime", "setFloat32x4",
+	addF("go.runtime", "setby1Float32x4",
 		func(s *state, n *Node, args []*ssa.Value) *ssa.Value {
 			return s.entryNewValue1(ssa.OpSet32Fx4, types.Types[types.TFLOAT32X4], args[0])
+		},
+		sys.AMD64)
+
+	addF("go.runtime", "setFloat32x4",
+		func(s *state, n *Node, args []*ssa.Value) *ssa.Value {
+			return s.load(types.Types[types.TFLOAT32X4], s.constOffPtrSP(types.Types[types.TFLOAT32X4], Ctxt.FixedFrameSize()))
 		},
 		sys.AMD64)
 

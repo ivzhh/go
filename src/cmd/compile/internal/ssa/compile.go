@@ -88,7 +88,6 @@ func Compile(f *Func) {
 			}
 		}
 
-		log.Printf("Running pass: %s", p.name)
 		tStart := time.Now()
 		p.fn(f)
 		tEnd := time.Now()
